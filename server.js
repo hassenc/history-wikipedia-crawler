@@ -11,21 +11,31 @@ contextClassifier = new natural.BayesClassifier();
 contextClassifier.addDocument("war battle fight defeat", 'War/Battle');
 contextClassifier.addDocument("founded founding", 'Foundation');
 contextClassifier.addDocument("born birth", 'Birth');
-contextClassifier.addDocument("expanded conquer conquered", 'Conquest');
+contextClassifier.addDocument("expanded conquer conquered take", 'Conquest');
 contextClassifier.addDocument("fall falls", 'Fall');
 contextClassifier.train();
 
 civilisationClassifier = new natural.BayesClassifier();
 civilisationClassifier.addDocument("carthage Hannibal Carthagian", 'Carthage');
-civilisationClassifier.addDocument("Rome Roman", 'Rome');
+civilisationClassifier.addDocument("Rome Roman republic", 'Rome');
 civilisationClassifier.addDocument("Persian Persia", 'Persia');
 civilisationClassifier.addDocument("Greek Greece", 'Greeks');
 civilisationClassifier.train();
+console.log(civilisationClassifier.getClassifications("Rome: carthage carthagians"))
 
 
+
+var raw = JSON.stringify(civilisationClassifier);
+fs.writeFile("classifier.json", raw, function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+});
+    
 var wikipediaLink = "http://en.wikipedia.org/wiki/";
 var crawler = Crawler.crawl("http://en.wikipedia.org/wiki/147_BC");
-// var crawler = new Crawler("en.wikipedia.org/wiki");
 
 // crawler.initialPath = "/147_BC";
 // crawler.initialPort = 8080;
@@ -53,7 +63,7 @@ crawler.on("fetchstart", function (queueItem , requestOptions ) {
 });
 crawler.discoverResources = function(buf, queueItem) {
     var resources = [];
-    for (var i = 146; i < 147; i++) {
+    for (var i = 100; i < 101; i++) {
         resources.push("http://en.wikipedia.org/wiki/146_BC","http://en.wikipedia.org/wiki/"+i+"_BC");
     };
     return resources;
