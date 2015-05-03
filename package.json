@@ -1,0 +1,8 @@
+{
+  "name": "wikipedia-crawler",
+  "author": "Hassen Chaieb",
+  "dependencies": {
+    "natural": "*",
+    "simplecrawler": "*"
+  }
+}
